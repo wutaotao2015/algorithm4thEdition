@@ -1,3 +1,5 @@
+package com.wtt.practice;
+
 import edu.princeton.cs.algs4.Accumulator;
 
 /**
