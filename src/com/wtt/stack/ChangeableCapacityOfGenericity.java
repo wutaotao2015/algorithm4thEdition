@@ -54,13 +54,12 @@ public class ChangeableCapacityOfGenericity<T> {
         for (String s : args) {
             if (!"-".equals(s)) {
                 changeableStack.push(s);
-                StdOut.println("aPu:size=" + changeableStack.size() + ",capa=" + changeableStack.capacity() + ",");
+//                StdOut.println("aPu:size=" + changeableStack.size() + ",capa=" + changeableStack.capacity() + ",");
             } else if (!changeableStack.isEmpty()) {
-                StdOut.println("popOut: " + changeableStack.pop() + ",");
-                StdOut.println("aPo:size=" + changeableStack.size() + ",capa=" + changeableStack.capacity() + ",");
+                StdOut.print(changeableStack.pop() + ",");
+//                StdOut.println("aPo:size=" + changeableStack.size() + ",capa=" + changeableStack.capacity() + ",");
             }
         }
         StdOut.println("(" + changeableStack.size() + " left on generic stack" + ")");
-        int[] a = new int[0];
     }
 }
