@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Comparator;
 
-public class Rational implements Comparator<Rational>{
+public class Rational implements Comparable<Rational>{
 
     private static Rational ZERO = new Rational(0, 1);
     private long numerator;
@@ -89,21 +89,20 @@ public class Rational implements Comparator<Rational>{
         return this.times(b.reciprocal());
     }
     @Override
-    public int compare(Rational o1, Rational o2) {
-        long lm = o1.numerator * o2.denominator;
-        long rm = o2.numerator * o1.denominator;
+    public int compareTo(Rational o) {
+        long lm = numerator * o.denominator;
+        long rm = o.numerator * denominator;
         if (lm > rm) return +1;
         if (lm < rm) return -1;
         return 0;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null) return false;
         if (!(obj instanceof Rational)) return false;
         Rational that = (Rational)obj;
-        return this.compare(this, that) == 0;
+        return this.compareTo(that) == 0;
     }
 
     @Override
@@ -115,7 +114,7 @@ public class Rational implements Comparator<Rational>{
     public static void main(String[] args) {
 
         Rational a = new Rational(1, 3);
-        Rational b = new Rational(3, 4);
+        Rational b = new Rational(0, 4);
         Rational plus = a.plus(b);
         StdOut.println(a + " + " + b + " = " + plus);
 
@@ -125,8 +124,8 @@ public class Rational implements Comparator<Rational>{
         Rational times = a.times(b);
         StdOut.println(a + " * " + b + " = " + times);
 
-        Rational divedes = a.divides(b);
-        StdOut.println(a + " / " + b + " = " + divedes);
+//        Rational divedes = a.divides(b);
+//        StdOut.println(a + " / " + b + " = " + divedes);
 
         Rational x, y, z;
 
@@ -172,4 +171,5 @@ public class Rational implements Comparator<Rational>{
         z = x.minus(y);
         StdOut.println(z);
     }
+
 }
