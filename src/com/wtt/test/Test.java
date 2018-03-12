@@ -1,4 +1,4 @@
-package com.wtt.practice.test;
+package com.wtt.test;
 
 import edu.princeton.cs.algs4.Accumulator;
 import edu.princeton.cs.algs4.StdDraw;

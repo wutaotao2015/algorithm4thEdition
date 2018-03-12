@@ -1,4 +1,4 @@
-package com.wtt.practice.stack;
+package com.wtt.stack;
 
 import edu.princeton.cs.algs4.StdOut;
 
