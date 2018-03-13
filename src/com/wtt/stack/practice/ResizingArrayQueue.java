@@ -23,7 +23,9 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
         }
     }
 
-    private T[] arr = (T[]) new Object[100];
+    private T[] arr = (T[]) new Object[1];
+
+    //first比last大1 是空队列的状态
     private int first = 0;
     private int last = -1;
     private int n = 0;
@@ -32,24 +34,42 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
         return n;
     }
 
+    public int capacity() {
+        return arr.length;
+    }
+
     public boolean isEmpty() {
         return n == 0;
     }
 
     public void enqueue(T t) throws Exception {
         if (last == arr.length - 1) {
-            throw new Exception("queue is full");
+            resize(arr.length * 2);
         }
         arr[++last] = t;
         n++;
     }
 
     public T dequeue() {
-        if (first > last) throw new NullPointerException("empty queue");
+        if (first > last) throw new NullPointerException("queue is empty,cannot dequeue");
+        if ((last - first) == arr.length / 4) {
+            resize(arr.length / 2);
+            first = last - first;
+            last = 0;
+        }
         T t = arr[first];
         arr[first++] = null;
         n--;
         return t;
+    }
+
+    private void resize(int newCapacity) {
+
+        T[] tmp = (T[]) new Object[newCapacity];
+        for (int i = 0; i < n; i++) {
+            tmp[i] = arr[i];
+        }
+        arr = tmp;
     }
 
     public static void main(String[] args) throws Exception {
@@ -60,7 +80,7 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
             if (!"-".equals(s)) {
                 stack2.enqueue(s);
             } else {
-                System.out.print(stack2.dequeue() + ",");
+                System.out.println(stack2.dequeue() + ":" + stack2.size() + "-" + stack2.capacity());
             }
         }
         System.out.println(stack2.size() + " left on stack");
