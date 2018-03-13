@@ -1,8 +1,5 @@
 package com.wtt.stack.practice;
 
-import edu.princeton.cs.algs4.In;
-
-import java.util.HashMap;
 import java.util.Iterator;
 
 public class Parentheses {
@@ -22,15 +19,15 @@ public class Parentheses {
             if (c == LEFT_BRACE) stack1.push(c);
             if (c == LEFT_BRACKET) stack1.push(c);
 
-            if (c == RIGHT_PAREN){
+            if (c == RIGHT_PAREN) {
                 if (stack1.isEmpty()) return false;
                 if (stack1.pop() != LEFT_PAREN) return false;
             }
-            if (c == RIGHT_BRACE){
+            if (c == RIGHT_BRACE) {
                 if (stack1.isEmpty()) return false;
                 if (stack1.pop() != LEFT_BRACE) return false;
             }
-            if (c == RIGHT_BRACKET){
+            if (c == RIGHT_BRACKET) {
                 if (stack1.isEmpty()) return false;
                 if (stack1.pop() != LEFT_BRACKET) return false;
             }
@@ -43,7 +40,7 @@ public class Parentheses {
         //[()]{}{[()()]()}
         //[(])
         System.out.println(args[0]);
-        System.out.println(isBalanced(args[0]));;
+        System.out.println(isBalanced(args[0]));
     }
 
 }
@@ -86,14 +83,6 @@ class Stack1<T> implements Iterable<T> {
 
     public boolean isEmpty() {
         return first == null;
-    }
-
-    public T peek() {
-        if (isEmpty()) {
-            return null;
-        }else{
-            return first.item;
-        }
     }
 
     public void push(T t) {
