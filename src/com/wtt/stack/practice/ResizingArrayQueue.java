@@ -3,6 +3,7 @@ package com.wtt.stack.practice;
 import java.util.Iterator;
 
 public class ResizingArrayQueue<T> implements Iterable<T> {
+
     @Override
     public Iterator<T> iterator() {
         return new ResizeQueueIterator();
@@ -52,14 +53,14 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
 
     public T dequeue() {
         if (first > last) throw new NullPointerException("queue is empty,cannot dequeue");
-        if ((last - first) == arr.length / 4) {
-            resize(arr.length / 2);
-            first = last - first;
-            last = 0;
-        }
         T t = arr[first];
         arr[first++] = null;
         n--;
+        if ((last - first) == arr.length / 4) {
+            resize(arr.length / 2);
+            last = last - first;
+            first = 0;
+        }
         return t;
     }
 
@@ -67,12 +68,13 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
 
         T[] tmp = (T[]) new Object[newCapacity];
         for (int i = 0; i < n; i++) {
-            tmp[i] = arr[i];
+            tmp[i] = arr[first + i];
         }
         arr = tmp;
     }
 
     public static void main(String[] args) throws Exception {
+
         ResizingArrayQueue<String> stack2 = new ResizingArrayQueue<>();
         String test = "to be or not to - be - - that - - - is";
         String[] testArr = test.split("\\s+");
@@ -83,7 +85,7 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
                 System.out.println(stack2.dequeue() + ":" + stack2.size() + "-" + stack2.capacity());
             }
         }
-        System.out.println(stack2.size() + " left on stack");
+        System.out.println(stack2.size() + " left on stack" + "-" + stack2.capacity());
         for (String s : stack2) {
             System.out.println(s);
         }
