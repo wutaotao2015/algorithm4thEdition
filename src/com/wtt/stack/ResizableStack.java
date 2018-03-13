@@ -63,8 +63,6 @@ public class ResizableStack<T> implements Iterable<T> {
             return stack[--i];
         }
 
-        @Override
-        public void remove() {}
     }
 
     public static void main(String[] args) {

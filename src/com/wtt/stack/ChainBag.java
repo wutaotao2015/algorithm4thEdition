@@ -51,8 +51,6 @@ public class ChainBag<T> implements Iterable<T> {
             return content;
         }
 
-        @Override
-        public void remove() {}
     }
     public static void main(String[] args) {
         //to be or not to - be - - that - - - is

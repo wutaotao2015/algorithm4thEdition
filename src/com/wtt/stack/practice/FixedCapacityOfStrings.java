@@ -56,11 +56,6 @@ public class FixedCapacityOfStrings implements Iterable<String>{
             if (!hasNext()) throw new NullPointerException("the stack is empty");
             return arr[i--];
         }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 
     public static void main(String[] args) {
