@@ -75,7 +75,7 @@ public class ResizingArrayQueue<T> implements Iterable<T> {
 
     public static void main(String[] args) throws Exception {
 
-        ResizingArrayQueue<String> stack2 = new ResizingArrayQueue<>();
+        E1314<String> stack2 = new E1314<>();
         String test = "to be or not to - be - - that - - - is";
         String[] testArr = test.split("\\s+");
         for (String s : testArr) {
