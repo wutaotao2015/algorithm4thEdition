@@ -55,7 +55,7 @@ public class Queue<T> implements Iterable<T> {
         n--;
         T t = first.item;
         first = first.next;
-        //这是出队的最后一个元素，保留first指针即可
+        //这是出队的最后一个元素，保留first指针即可,遍历用
         if (first == null) last = null;
         return t;
     }
