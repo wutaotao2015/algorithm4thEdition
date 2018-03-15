@@ -69,14 +69,17 @@ public class BinarySearch {
      */
     public static void main(String[] args) {
 
+        // program arguments  路径根据自己机器路径变更
+        // D:\wb-wtt355306\IdeaProjects\algorithm4thEdition\src\com\wtt\chapter1\binarySearch\w.txt D:\wb-wtt355306\IdeaProjects\algorithm4thEdition\src\com\wtt\chapter1\binarySearch\t.txt
         // read the integers from a file
         In in = new In(args[0]);
         int[] whitelist = in.readAllInts();
         In inTest = new In(args[1]);
         int[] intTests = inTest.readAllInts();
+
+        // need to binary,always sort first
         // sort the array
         Arrays.sort(whitelist);
-
         // read integer key from standard input; print if not in whitelist
         for (int key : intTests) {
             if (edu.princeton.cs.algs4.BinarySearch.indexOf(whitelist, key) == -1)
