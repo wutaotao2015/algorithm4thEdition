@@ -1,4 +1,4 @@
-package com.wtt.stack.practice;
+package com.wtt.chapter1.practice;
 
 // 从对2个指针的控制实现逻辑上的循环队列
 // 增加元素为last++,last == length时last = 0

@@ -1,21 +1,21 @@
-package com.wtt.stack;
+package com.wtt.chapter1;
 
 import edu.princeton.cs.algs4.StdOut;
 
-public class FixedCapacityOfGenericity<T> {
+public class FixedCapacityOfStrings {
 
-    private T[] arr;
+    private String[] arr;
     private int n;
 
     public void init(int capacity) {
-        arr = (T[]) new Object[capacity];
+        arr = new String[capacity];
     }
 
-    public void push(T a) {
+    public void push(String a) {
         arr[n++] = a;
     }
 
-    public T pop() {
+    public String pop() {
         return arr[--n];
     }
 
@@ -29,7 +29,7 @@ public class FixedCapacityOfGenericity<T> {
 
     public static void main(String[] args) {
 
-        FixedCapacityOfGenericity<String> fixedStack = new FixedCapacityOfGenericity<>();
+        FixedCapacityOfStrings fixedStack = new FixedCapacityOfStrings();
         fixedStack.init(50);
 
         //to be or not to - be - - that - - - is
@@ -40,6 +40,6 @@ public class FixedCapacityOfGenericity<T> {
                 StdOut.print(fixedStack.pop() + " ");
             }
         }
-        StdOut.println("(" + fixedStack.size() + " left on generic stack" + ")");
+        StdOut.println("(" + fixedStack.size() + " left on String stack" + ")");
     }
 }

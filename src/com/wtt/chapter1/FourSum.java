@@ -1,4 +1,4 @@
-package com.wtt.stack;
+package com.wtt.chapter1;
 
 /**
  * Created by wutaotao

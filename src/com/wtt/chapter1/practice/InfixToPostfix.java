@@ -1,4 +1,4 @@
-package com.wtt.stack.practice;
+package com.wtt.chapter1.practice;
 
 import java.util.Iterator;
 

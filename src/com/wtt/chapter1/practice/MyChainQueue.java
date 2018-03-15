@@ -1,75 +1,42 @@
-package com.wtt.stack.practice;
+package com.wtt.chapter1.practice;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class Josephus {
-
-    public static void printSquence(int N, int M){
-
-        JosephusQueue<Integer> queue = new JosephusQueue<>();
-        for(int i = 0; i < N; i++) {
-            queue.enqueue(i);
-        }
-
-        while(queue.size() > 0){
-            for(int i = 0; i < M - 1; i++){
-                queue.enqueue(queue.dequeue());
-            }
-            System.out.print(queue.dequeue() + ",");
-        }
-        System.out.println("over");
-    }
-
-    public static void main(String[] args) {
-        printSquence(7, 2);
-    }
-}
-
-class JosephusQueue<T> implements Iterable<T> {
+public class MyChainQueue<T> implements Iterable<T>{
 
     @Override
-    public Iterator<T> iterator() {
-        return new QueueIterator();
+    public Iterator<T> iterator(){
+        return new ChainQueueIterator();
     }
-
-    private class QueueIterator implements Iterator<T> {
+    private class ChainQueueIterator implements Iterator<T> {
 
         private Node cur = first;
-
         @Override
-        public boolean hasNext() {
+        public boolean hasNext(){
             return cur != null;
         }
-
         @Override
-        public T next() {
+        public T next(){
             T t = cur.item;
             cur = cur.next;
             return t;
         }
     }
-
-    public class Node {
+    private class Node{
         T item;
         Node next;
     }
-
     private Node first;
     private Node last;
     private int n;
-
-    public int size() {
-        return n;
-    }
-
-    public boolean isEmpty() {
-        return first == null;
-    }
-    public void enqueue(T t) {
+    public int size(){return n;}
+    public boolean isEmpty(){return n == 0;}
+    public void enqueue(T t){
         Node oldLast = last;
         last = new Node();
         last.item = t;
-        if (isEmpty()){
+        if (n == 0) {
             first = last;
         }else{
             oldLast.next = last;
@@ -77,17 +44,17 @@ class JosephusQueue<T> implements Iterable<T> {
         n++;
     }
     public T dequeue(){
+        if(n == 0) throw new NoSuchElementException("queue underflow");
         T t = first.item;
         first = first.next;
-        if (first == null) {
-            last = null;
-        }
+        if(n == 1) last = null;
         n--;
         return t;
     }
+
     public static void main(String[] args) {
 
-        JosephusQueue<String> queue = new JosephusQueue<>();
+        MyChainQueue<String> queue = new MyChainQueue<>();
         String test = "to be or not to - be - - that - - - is";
         String[] testArr = test.split("\\s+");
         for (String s : testArr) {
@@ -104,15 +71,3 @@ class JosephusQueue<T> implements Iterable<T> {
         System.out.println("over");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
