@@ -32,7 +32,7 @@ public class ChainQueue<T> implements Iterable<T> {
         Node oldLast = last;
         last = new Node();
         last.content = t;
-        if (isEmpty()) {
+        if (first == null) {
             first = last;
         } else {
             oldLast.next = last;
@@ -44,7 +44,8 @@ public class ChainQueue<T> implements Iterable<T> {
         T t = first.content;
         first = first.next;
         n--;
-        if (isEmpty()) {
+        //this is the last element, first is null
+        if (first == null) {
             last = null;
         }
         return t;
@@ -52,20 +53,40 @@ public class ChainQueue<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ChainQueueIterator();
+    }
+
+    private class ChainQueueIterator implements Iterator<T> {
+
+        private Node cur = first;
+        @Override
+        public boolean hasNext() {
+            return cur != null;
+        }
+
+        @Override
+        public T next() {
+            T t = cur.content;
+            cur = cur.next;
+            return t;
+        }
     }
 
     public static void main(String[] args) {
 
-        //to be or not to - be - - that - - - is
-        ChainQueue<String> chainStack = new ChainQueue<>();
-        for (String s : args) {
+        String test = "to be or not to - be - - that - - - is";
+        String[] arr = test.split("\\s+");
+        ChainQueue<String> chainQueue = new ChainQueue<>();
+        for (String s : arr) {
             if (!"-".equals(s)) {
-                chainStack.enqueue(s);
-            } else if (!chainStack.isEmpty()) {
-                StdOut.print(chainStack.dequeue() + ",");
+                chainQueue.enqueue(s);
+            } else if (!chainQueue.isEmpty()) {
+                StdOut.print(chainQueue.dequeue() + ",");
             }
         }
-        StdOut.println("(" + chainStack.size() + " left on generic stack" + ")");
+        StdOut.println("(" + chainQueue.size() + " left on generic stack" + ")");
+        for (String s : chainQueue) {
+            System.out.println(s);
+        }
     }
 }

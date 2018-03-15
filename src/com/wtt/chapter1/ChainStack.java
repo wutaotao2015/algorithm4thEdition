@@ -45,14 +45,32 @@ public class ChainStack<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ChainStackIterator();
+    }
+
+    private class ChainStackIterator implements Iterator<T> {
+
+        private Node cur = first;
+        @Override
+        public boolean hasNext() {
+            return cur != null;
+        }
+
+        @Override
+        public T next() {
+            T t = cur.content;
+            cur = cur.next;
+            return t;
+        }
     }
 
     public static void main(String[] args) {
 
-        //to be or not to - be - - that - - - is
+        String test = "to be or not to - be - - that - - - is";
+        String[] arr = test.split("\\s+");
+
         ChainStack<String> chainStack = new ChainStack<>();
-        for (String s : args) {
+        for (String s : arr) {
             if (!"-".equals(s)) {
                 chainStack.push(s);
             } else if (!chainStack.isEmpty()) {
@@ -60,5 +78,8 @@ public class ChainStack<T> implements Iterable<T> {
             }
         }
         StdOut.println("(" + chainStack.size() + " left on generic stack" + ")");
+        for (String s : chainStack) {
+            System.out.println(s);
+        }
     }
 }

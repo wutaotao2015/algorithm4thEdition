@@ -1,4 +1,4 @@
-package com.wtt.chapter1;
+package com.wtt.chapter1.practice;
 
 /**
  * Created by wutaotao

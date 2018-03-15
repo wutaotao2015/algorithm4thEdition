@@ -53,9 +53,11 @@ public class ChainBag<T> implements Iterable<T> {
 
     }
     public static void main(String[] args) {
-        //to be or not to - be - - that - - - is
+
+        String test = "to be or not to - be - - that - - - is";
+        String[] arr = test.split("\\s+");
         ChainBag<String> chainBag = new ChainBag<>();
-        for (String s : args) {
+        for (String s : arr) {
             if (!"-".equals(s)) {
                 chainBag.add(s);
             }
