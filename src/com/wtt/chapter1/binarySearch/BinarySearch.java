@@ -1,4 +1,4 @@
-package com.wtt.binarySearch;
+package com.wtt.chapter1.binarySearch;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
