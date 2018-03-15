@@ -36,7 +36,16 @@ public class WeightingQuickUnion {
     }
 
     public int find(int p) {
-        while (componentArr[p] != p) p = componentArr[p];
+        int initialP = p;
+        while (componentArr[p] != p){
+            p = componentArr[p];
+        }
+        // 压缩路径，得到只有一层的扁平化的树
+        for (int x = initialP; x != p; ) {
+            int tmpComponent = componentArr[x];
+            componentArr[x] = p;
+            x = tmpComponent;
+        }
         return p;
     }
 
@@ -80,6 +89,8 @@ public class WeightingQuickUnion {
         System.out.println(Arrays.toString(quickUnion.componentArr));
         System.out.println(Arrays.toString(quickUnion.componentSize));
         System.out.println(stopwatch.elapsedTime());
+        // 非压缩路径得到的父节点数组为[6, 2, 6, 4, 4, 6, 6, 2, 4, 4]
+        // 压缩后父节点数组为 [6, 6, 6, 4, 4, 6, 6, 6, 4, 4] ， 明显可以看出该树只有一层
         // [6, 2, 6, 4, 4, 6, 6, 2, 4, 4] 比[1, 1, 1, 8, 3, 0, 5, 1, 8, 8]少一层，只有2层
         // componentSizeArr [1, 1, 3, 1, 4, 1, 6, 1, 1, 1]
         // 该数组展示了每个索引作为根节点时所在树的总节点数
