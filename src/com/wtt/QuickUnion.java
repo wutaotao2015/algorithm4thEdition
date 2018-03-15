@@ -28,12 +28,17 @@ public class QuickUnion {
             componentArr[i] = i;
         }
     }
-    public int getCount(){return count;}
-    public int find(int p){
-        while(componentArr[p] != p) p = componentArr[p];
+
+    public int getCount() {
+        return count;
+    }
+
+    public int find(int p) {
+        while (componentArr[p] != p) p = componentArr[p];
         return p;
     }
-    public void union(int p, int q){
+
+    public void union(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
 
@@ -41,7 +46,8 @@ public class QuickUnion {
         componentArr[rootP] = rootQ;
         count--;
     }
-    public boolean isConnected(int p, int q){
+
+    public boolean isConnected(int p, int q) {
         return find(p) == find(q);
     }
 
@@ -53,7 +59,7 @@ public class QuickUnion {
         In in = new In(args[0]);
         int count = in.readInt();
         QuickUnion quickUnion = new QuickUnion(count);
-        while(!in.isEmpty()) {
+        while (!in.isEmpty()) {
 
             int p = in.readInt();
             int q = in.readInt();

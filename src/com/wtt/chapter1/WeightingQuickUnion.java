@@ -1,6 +1,5 @@
 package com.wtt.chapter1;
 
-import com.wtt.QuickUnion;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stopwatch;
 
@@ -8,13 +7,13 @@ import java.util.Arrays;
 
 /**
  * 由于QuickUnion的建树过程中，可能将大树归并到小树上，
- 这个过程如果不断累加进行，会导致以前的大树节点的深度
- 非常深，从而导致find该节点的时间消耗增多，从而影响性能。
- 所以采取每次归并树都是小树归并到大树上的策略，
- 从而将任意节点的深度控制在lgN上。
-
- 大树归并到小树上，该树纵向扩展，增加树的高度。
- 小树归并到大树上，该树横向扩展，树的高度不变。
+ * 这个过程如果不断累加进行，会导致以前的大树节点的深度
+ * 非常深，从而导致find该节点的时间消耗增多，从而影响性能。
+ * 所以采取每次归并树都是小树归并到大树上的策略，
+ * 从而将任意节点的深度控制在lgN上。
+ * <p>
+ * 大树归并到小树上，该树纵向扩展，增加树的高度。
+ * 小树归并到大树上，该树横向扩展，树的高度不变。
  */
 public class WeightingQuickUnion {
 
@@ -32,10 +31,11 @@ public class WeightingQuickUnion {
         }
     }
 
-    public int getCount(){
+    public int getCount() {
         return count;
     }
-    public int find(int p){
+
+    public int find(int p) {
         while (componentArr[p] != p) p = componentArr[p];
         return p;
     }
@@ -49,7 +49,7 @@ public class WeightingQuickUnion {
         if (componentSize[rootP] < componentSize[rootQ]) {
             componentArr[rootP] = rootQ;
             componentSize[rootQ] += componentSize[rootP];
-        }else{
+        } else {
             componentArr[rootQ] = rootP;
             componentSize[rootP] += componentSize[rootQ];
         }
@@ -59,6 +59,7 @@ public class WeightingQuickUnion {
     public boolean isConnected(int p, int q) {
         return find(p) == find(q);
     }
+
     public static void main(String[] args) {
         Stopwatch stopwatch = new Stopwatch();
         // program arguments
@@ -66,7 +67,7 @@ public class WeightingQuickUnion {
         In in = new In(args[0]);
         int count = in.readInt();
         WeightingQuickUnion quickUnion = new WeightingQuickUnion(count);
-        while(!in.isEmpty()) {
+        while (!in.isEmpty()) {
 
             int p = in.readInt();
             int q = in.readInt();
