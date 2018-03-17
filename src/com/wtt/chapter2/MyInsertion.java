@@ -22,14 +22,31 @@ public class MyInsertion {
 //            System.out.println(Arrays.toString(arr));
 //        }
         // 主键大的元素右移的插入排序
-        for (int i = 1; i < arr.length; i++) {
+//        for (int i = 1; i < arr.length; i++) {
+//            Comparable ins = arr[i];
+//            int j;
+//            for (j = i; j > 0 && less(ins, arr[j - 1]); j--) {
+//                arr[j] = arr[j - 1];
+//            }
+//            arr[j] = ins;
+////            System.out.println(Arrays.toString(arr));
+//        }
+        // 右移加哨兵
+        int exchCount = 0;
+        for(int i = arr.length - 1; i > 0; i--) {
+            if (less(arr[i], arr[i - 1])) {
+                exch(arr, i, i - 1);
+                exchCount++;
+            }
+        }
+        if (exchCount == 0) return;
+        for (int i = 2; i < arr.length; i++) {
             Comparable ins = arr[i];
             int j;
-            for (j = i - 1; j >= 0 && less(ins, arr[j]); j--) {
-                arr[j + 1] = arr[j];
+            for(j = i; less(ins, arr[j - 1]); j--) {
+                arr[j] = arr[j - 1];
             }
-            arr[j + 1] = ins;
-//            System.out.println(Arrays.toString(arr));
+            arr[j] = ins;
         }
     }
 

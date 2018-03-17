@@ -28,15 +28,33 @@ public class Combination {
                 exch(arr, j, j - 1);
             }
         }
-        //Insertion (right move)
+        //Insertion (right move,no swap)
         for(int i = 1; i < n; i++) {
             Comparable ins = arr[i];
             int j;
-            for(j = i - 1; j >= 0 && less(ins, arr[j]); j--){
-                arr[j + 1] = arr[j];
+            for(j = i; j > 0 && less(ins, arr[j - 1]); j--){
+                arr[j] = arr[j - 1];
             }
-            arr[j + 1] = ins;
+            arr[j] = ins;
         }
+        //Insertion (right move, no swap, one sentinel without j > 0)
+        int exchangeCount = 0;
+        for (int i = n - 1; i > 0; i--) {
+            if (less(arr[i], arr[i - 1])){
+                exch(arr, i, i - 1);
+                exchangeCount++;
+            }
+        }
+        if (exchangeCount == 0) return;
+        for (int i = 2; i < n; i++) {
+            Comparable ins = arr[i];
+            int j;
+            for(j = i; less(ins, arr[j - 1]); j--) {
+                arr[j] = arr[j - 1];
+            }
+            arr[j] = ins;
+        }
+
         //Shell
         int h = 1;
         while(h < n/3) h = 3*h + 1;
