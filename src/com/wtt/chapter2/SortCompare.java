@@ -10,12 +10,12 @@ public class SortCompare {
 
     public static double time(String alg, Double[] a) {
         Stopwatch sw = new Stopwatch();
-        if      (alg.equals("Insertion"))       Insertion.sort(a);
+        if      (alg.equals("MyInsertion"))       MyInsertion.sort(a);
 //        else if (alg.equals("InsertionX"))      InsertionX.sort(a);
 //        else if (alg.equals("BinaryInsertion")) BinaryInsertion.sort(a);
-        else if (alg.equals("Selection"))       Selection.sort(a);
+        else if (alg.equals("MySelection"))       MySelection.sort(a);
 //        else if (alg.equals("Bubble"))          Bubble.sort(a);
-//        else if (alg.equals("Shell"))           Shell.sort(a);
+        else if (alg.equals("MyShell"))             MyShell.sort(a);
 //        else if (alg.equals("Merge"))           Merge.sort(a);
 //        else if (alg.equals("MergeX"))          MergeX.sort(a);
 //        else if (alg.equals("MergeBU"))         MergeBU.sort(a);
@@ -59,8 +59,9 @@ public class SortCompare {
 //        String alg2 = args[1];
 //        int n = Integer.parseInt(args[2]);
 //        int trials = Integer.parseInt(args[3]);
-        String alg1 = "Insertion";
-        String alg2 = "Selection";
+        String alg1 = "MyShell";
+//        String alg2 = "MyInsertion";
+        String alg2 = "MySelection";
         int n = 1000;
         int trials = 1000;
         double time1, time2;

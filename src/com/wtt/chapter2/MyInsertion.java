@@ -1,6 +1,5 @@
 package com.wtt.chapter2;
 
-import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
 
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import java.util.Arrays;
  * 最坏的情况是数据是倒序排列，需要N^2/2次比较，N^2/2次交换
  * 即平均N^2/4次比较和N^2/4次交换
  */
-public class Insertion {
+public class MyInsertion {
 
     public static void sort(Comparable[] arr) {
 
@@ -24,12 +23,12 @@ public class Insertion {
 //        }
         // 主键大的元素右移的插入排序
         for (int i = 1; i < arr.length; i++) {
-            Comparable toBeInsertedValue = arr[i];
+            Comparable ins = arr[i];
             int j;
-            for (j = i - 1; j >= 0 && less(toBeInsertedValue, arr[j]); j--) {
+            for (j = i - 1; j >= 0 && less(ins, arr[j]); j--) {
                 arr[j + 1] = arr[j];
             }
-            arr[j + 1] = toBeInsertedValue;
+            arr[j + 1] = ins;
 //            System.out.println(Arrays.toString(arr));
         }
     }
@@ -69,10 +68,10 @@ public class Insertion {
         System.out.println("before test:");
         System.out.println(Arrays.toString(test));
         System.out.println("begin test:");
-        Insertion.sort(test);
+        MyInsertion.sort(test);
         System.out.println("after test:");
-        Selection.show(test);
-        System.out.println(Selection.isSorted(test));
+        MySelection.show(test);
+        System.out.println(MySelection.isSorted(test));
         System.out.println(stopwatch.elapsedTime());
     }
 }

@@ -14,7 +14,7 @@ import java.util.Arrays;
  * 选择排序所花的时间完全相同，
  * 即其所花时间与输入状态无关。
  */
-public class Selection {
+public class MySelection {
 
     public static void sort(Comparable[] arr) {
 
@@ -64,10 +64,10 @@ public class Selection {
         System.out.println("before test:");
         System.out.println(Arrays.toString(test));
         System.out.println("begin sort:");
-        Selection.sort(test);
+        MySelection.sort(test);
         System.out.println("after test:");
-        Selection.show(test);
-        System.out.println(Selection.isSorted(test));
+        MySelection.show(test);
+        System.out.println(MySelection.isSorted(test));
         System.out.println(stopwatch.elapsedTime());
     }
 }

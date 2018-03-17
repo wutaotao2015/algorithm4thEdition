@@ -80,7 +80,7 @@ public class TraceSelection {
     // test client
     public static void main(String[] args) {
         // parse command-line argument as an array of 1-character strings
-        String s = args[0];
+        String s = "EASYQUESTION";
         int n = s.length();
         String[] a = new String[n];
         for (int i = 0; i < n; i++)
