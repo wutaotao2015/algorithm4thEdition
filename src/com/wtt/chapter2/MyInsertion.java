@@ -9,6 +9,10 @@ import java.util.Arrays;
  * 最好的情况是数据已经全部有序，需要N-1次比较，0次交换
  * 最坏的情况是数据是倒序排列，需要N^2/2次比较，N^2/2次交换
  * 即平均N^2/4次比较和N^2/4次交换
+ * <p>
+ * 将最小的元素放到最左边（作为哨兵）的好处是去掉了边界条件j > 0
+ * 因为之前当j = 1时，若仍然满足less条件，右移后j--进入下个循环，从而导致j-1 == -1数组越界，
+ * 当有哨兵后，可以确定less条件在j - 1 == 0时一定会不满足条件，从而跳出循环，不会出现j == 0的情况。
  */
 public class MyInsertion {
 
@@ -33,7 +37,7 @@ public class MyInsertion {
 //        }
         // 右移加哨兵
         int exchCount = 0;
-        for(int i = arr.length - 1; i > 0; i--) {
+        for (int i = arr.length - 1; i > 0; i--) {
             if (less(arr[i], arr[i - 1])) {
                 exch(arr, i, i - 1);
                 exchCount++;
@@ -43,7 +47,7 @@ public class MyInsertion {
         for (int i = 2; i < arr.length; i++) {
             Comparable ins = arr[i];
             int j;
-            for(j = i; less(ins, arr[j - 1]); j--) {
+            for (j = i; less(ins, arr[j - 1]); j--) {
                 arr[j] = arr[j - 1];
             }
             arr[j] = ins;
