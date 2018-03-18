@@ -15,25 +15,27 @@ import java.util.Arrays;
  */
 public class MyMergeX {
 
-    //auxiliary array
-    private static Comparable[] aux;
-
     public static void sort(Comparable[] arr) {
-        aux = new Comparable[arr.length];
-        sort(arr, 0, arr.length - 1);
+        //auxiliary array
+        Comparable[] aux = new Comparable[arr.length];
+        sort(arr, aux, 0, arr.length - 1);
     }
 
-    public static void sort(Comparable[] arr, int lo, int hi) {
+    public static void sort(Comparable[] arr, Comparable[] aux, int lo, int hi) {
 
-        if (hi - lo <= 15) {
+        if (hi - lo <= 7) {
             MyInsertion.sort(arr, lo, hi);
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        sort(arr, lo, mid);
-        sort(arr, mid + 1, hi);
+        sort(arr, aux, lo, mid);
+        sort(arr, aux, mid + 1, hi);
         if (!less(arr[mid], arr[mid + 1])) {
-            merge(arr, lo, mid, hi);
+            merge(arr, aux, lo, mid, hi);
+        }else{
+            for (int i = lo; i <= hi; i++) {
+                arr[i] = aux[i];
+            }
         }
     }
 
@@ -41,7 +43,7 @@ public class MyMergeX {
         return a.compareTo(b) < 0;
     }
 
-    public static void merge(Comparable[] arr, int lo, int mid, int hi) {
+    public static void merge(Comparable[] arr, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo, j = mid + 1;
 
@@ -61,14 +63,15 @@ public class MyMergeX {
             }
         }
     }
+
     public static void main(String[] args) {
         Stopwatch stopwatch = new Stopwatch();
-//        Integer[] test = new Integer[]{8, 2, 0, 6, 9, 8, 7, 9, 5, 4};
-        int n = 100;
-        Integer[] test = new Integer[n];
-        for (int i = 0; i < n; i++) {
-            test[i] = StdRandom.uniform(n);
-        }
+        Integer[] test = new Integer[]{8, 2, 0, 6, 9, 8, 7, 9, 5, 4};
+//        int n = 100;
+//        Integer[] test = new Integer[n];
+//        for (int i = 0; i < n; i++) {
+//            test[i] = StdRandom.uniform(n);
+//        }
         System.out.println("before test:");
         System.out.println(Arrays.toString(test));
         System.out.println("begin test:");

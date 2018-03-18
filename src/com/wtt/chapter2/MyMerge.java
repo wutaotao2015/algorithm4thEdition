@@ -15,21 +15,19 @@ import java.util.Arrays;
  */
 public class MyMerge {
 
-    private static Comparable[] aux;
-
     public static void sort(Comparable[] arr) {
 
-        aux = new Comparable[arr.length];
-        sort(arr, 0, arr.length - 1);
+        Comparable[] aux = new Comparable[arr.length];
+        sort(arr, aux, 0, arr.length - 1);
     }
 
-    public static void sort(Comparable[] arr, int lo, int hi) {
+    public static void sort(Comparable[] arr, Comparable[] aux, int lo, int hi) {
 
         if (lo >= hi) return;
         int mid = lo + (hi - lo) / 2;
-        sort(arr, lo, mid);
-        sort(arr, mid + 1, hi);
-        merge(arr, lo, mid, hi);
+        sort(arr, aux, lo, mid);
+        sort(arr, aux, mid + 1, hi);
+        merge(arr, aux, lo, mid, hi);
     }
 
     public static boolean less(Comparable a, Comparable b) {
@@ -44,7 +42,7 @@ public class MyMerge {
      * @param lo
      * @param hi
      */
-    public static void merge(Comparable[] arr, int lo, int mid, int hi) {
+    public static void merge(Comparable[] arr, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo, j = mid + 1;
 
