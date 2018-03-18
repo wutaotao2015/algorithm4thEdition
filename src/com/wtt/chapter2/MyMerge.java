@@ -11,6 +11,12 @@ import java.util.Arrays;
  * 通过递归将左右2个已经有序的子数组逐个比较再归并回原数组得到正确排序的思想
  * 它的比较次数为N/2logN 到 NlogN之间。
  * 访问数组次数最多为6NlogN次（2N复制数组，2N归并回原数组，2N次比较（左右子数组归并n次，整个数组n次））。
+ * <p>
+ * 这是自顶向下的递归排序，是标准的递归调用
+ * <p>
+ * 由代码可知，sort是先左边的子数组先排序，再是右边的子数组，
+ * 所以可以得知其排序轨迹是先左后右，先前后后的的排序轨迹。
+ *
  * Created by wutaotao
  * 2018/3/18 10:20
  */
@@ -58,8 +64,7 @@ public class MyMerge {
             //右边耗净
             else if (j > hi) {
                 arr[k] = aux[i++];
-            }
-            else if (less(aux[j], aux[i])) {
+            } else if (less(aux[j], aux[i])) {
                 arr[k] = aux[j++];
             }
             //左右两边的元素相等时取左边的元素
@@ -68,6 +73,7 @@ public class MyMerge {
             }
         }
     }
+
     public static boolean isSorted(Comparable[] arr) {
 
         for (int i = 1; i < arr.length; i++) {
