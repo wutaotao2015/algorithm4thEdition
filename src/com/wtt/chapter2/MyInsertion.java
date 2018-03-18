@@ -26,6 +26,7 @@ public class MyInsertion {
 //            System.out.println(Arrays.toString(arr));
 //        }
         // 主键大的元素右移的插入排序
+        sort(arr, 0, arr.length - 1);
 //        for (int i = 1; i < arr.length; i++) {
 //            Comparable ins = arr[i];
 //            int j;
@@ -36,18 +37,30 @@ public class MyInsertion {
 ////            System.out.println(Arrays.toString(arr));
 //        }
         // 右移加哨兵
-        int exchCount = 0;
-        for (int i = arr.length - 1; i > 0; i--) {
-            if (less(arr[i], arr[i - 1])) {
-                exch(arr, i, i - 1);
-                exchCount++;
-            }
-        }
-        if (exchCount == 0) return;
-        for (int i = 2; i < arr.length; i++) {
+//        int exchCount = 0;
+//        for (int i = arr.length - 1; i > 0; i--) {
+//            if (less(arr[i], arr[i - 1])) {
+//                exch(arr, i, i - 1);
+//                exchCount++;
+//            }
+//        }
+//        if (exchCount == 0) return;
+//        for (int i = 2; i < arr.length; i++) {
+//            Comparable ins = arr[i];
+//            int j;
+//            for (j = i; less(ins, arr[j - 1]); j--) {
+//                arr[j] = arr[j - 1];
+//            }
+//            arr[j] = ins;
+//        }
+    }
+
+    public static void sort(Comparable[] arr, int lo, int hi) {
+
+        for (int i = lo + 1; i <= hi; i++) {
             Comparable ins = arr[i];
             int j;
-            for (j = i; less(ins, arr[j - 1]); j--) {
+            for(j = i; j > lo && less(ins, arr[j - 1]); j--) {
                 arr[j] = arr[j - 1];
             }
             arr[j] = ins;

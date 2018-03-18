@@ -16,8 +16,8 @@ public class SortCompare {
         else if (alg.equals("MySelection"))       MySelection.sort(a);
 //        else if (alg.equals("Bubble"))          Bubble.sort(a);
         else if (alg.equals("MyShell"))             MyShell.sort(a);
-//        else if (alg.equals("Merge"))           Merge.sort(a);
-//        else if (alg.equals("MergeX"))          MergeX.sort(a);
+        else if (alg.equals("MyMerge"))           MyMerge.sort(a);
+        else if (alg.equals("MyMergeX"))          MyMergeX.sort(a);
 //        else if (alg.equals("MergeBU"))         MergeBU.sort(a);
 //        else if (alg.equals("Quick"))           Quick.sort(a);
 //        else if (alg.equals("Quick3way"))       Quick3way.sort(a);
@@ -59,10 +59,13 @@ public class SortCompare {
 //        String alg2 = args[1];
 //        int n = Integer.parseInt(args[2]);
 //        int trials = Integer.parseInt(args[3]);
-        String alg1 = "MyShell";
+//        String alg1 = "MyShell";
+        String alg1 = "MyMergeX";
+        String alg2 = "MyMerge";
 //        String alg2 = "MyInsertion";
-        String alg2 = "MySelection";
-        int n = 1000;
+//        String alg2 = "MySelection";
+//        String alg2 = "MyShell";
+        int n = 50000;
         int trials = 1000;
         double time1, time2;
 //        if (args.length == 5 && args[4].equals("sorted")) {
