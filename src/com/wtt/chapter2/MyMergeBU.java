@@ -6,6 +6,12 @@ import edu.princeton.cs.algs4.Stopwatch;
 import java.util.Arrays;
 
 /**
+ * 自顶向下，是将问题分解，解决小问题后再解决大问题，然后通过递归的方法解决整个问题。
+ * 自底向上，是先解决类似的小问题，然后再逐步解决更大的问题
+ * <p>
+ * 由算法轨迹可得，递归的方法是先排左边的子数组，随着递归的进行，排好序的子数组逐渐向右方扩增
+ * 而以下通过两重循环的方式，是将相同规模的小数组同步一起先归并完后，再针对下个级别规模的数组进行统一归并，
+ * 即它的算法轨迹是同步增长的模式。
  * Created by wutaotao
  * 2018/3/18 21:45
  */
@@ -16,7 +22,7 @@ public class MyMergeBU {
         int n = arr.length;
         Comparable[] aux = new Comparable[n];
 
-        for(int size = 1; size < n; size = size + size) {
+        for (int size = 1; size < n; size = size + size) {
 
             for (int lo = 0; lo < n - size; lo = lo + size + size) {
 
@@ -24,6 +30,7 @@ public class MyMergeBU {
             }
         }
     }
+
     public static void merge(Comparable[] arr, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo, j = mid + 1;
@@ -35,16 +42,18 @@ public class MyMergeBU {
                 arr[k] = aux[j++];
             } else if (j > hi) {
                 arr[k] = aux[i++];
-            } else if(less(aux[j], aux[i])) {
+            } else if (less(aux[j], aux[i])) {
                 arr[k] = aux[j++];
             } else {
                 arr[k] = aux[i++];
             }
         }
     }
+
     public static boolean less(Comparable a, Comparable b) {
         return a.compareTo(b) < 0;
     }
+
     public static boolean isSorted(Comparable[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (less(arr[i], arr[i - 1])) return false;
