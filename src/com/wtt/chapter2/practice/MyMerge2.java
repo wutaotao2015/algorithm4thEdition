@@ -1,4 +1,4 @@
-package com.wtt.chapter2;
+package com.wtt.chapter2.practice;
 
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
@@ -6,15 +6,10 @@ import edu.princeton.cs.algs4.Stopwatch;
 import java.util.Arrays;
 
 /**
- * 归并排序
- * 分治法思想
- * 通过递归将左右2个已经有序的子数组逐个比较再归并回原数组得到正确排序的思想
- * 它的比较次数为N/2logN 到 NlogN之间。
- * 访问数组次数最多为6NlogN次（2N复制数组，2N归并回原数组，2N次比较（左右子数组归并n次，整个数组n次））。
  * Created by wutaotao
- * 2018/3/18 10:20
+ * 2018/3/18 20:15
  */
-public class MyMerge {
+public class MyMerge2 {
 
     public static void sort(Comparable[] arr) {
 
@@ -28,52 +23,51 @@ public class MyMerge {
         int mid = lo + (hi - lo) / 2;
         sort(arr, aux, lo, mid);
         sort(arr, aux, mid + 1, hi);
+
+        assert isSorted(arr, lo, mid);
+        assert isSorted(arr, mid + 1, hi);
+
         merge(arr, aux, lo, mid, hi);
+
+        assert isSorted(arr, lo, hi);
     }
 
-    public static boolean less(Comparable a, Comparable b) {
-        return a.compareTo(b) < 0;
-    }
-
-    /**
-     * 原地归并
-     * 将2个已经有序的子数组归并成一个大数组
-     *
-     * @param arr
-     * @param lo
-     * @param hi
-     */
-    public static void merge(Comparable[] arr, Comparable[] aux, int lo, int mid, int hi) {
+    // 从arr拷贝到aux中，在aux中比较后归并到arr中，可以利用对称性省略掉拷贝元素这一步。
+    private static void merge(Comparable[] arr, Comparable[] aux, int lo, int mid, int hi) {
 
         int i = lo, j = mid + 1;
-
         for (int k = lo; k <= hi; k++) {
             aux[k] = arr[k];
         }
         for (int k = lo; k <= hi; k++) {
-            //左边耗净
             if (i > mid) {
                 arr[k] = aux[j++];
-            }
-            //右边耗净
-            else if (j > hi) {
+            } else if (j > hi) {
                 arr[k] = aux[i++];
-            }
-            else if (less(aux[j], aux[i])) {
+            } else if (less(aux[j], aux[i])) {
                 arr[k] = aux[j++];
-            }
-            //左右两边的元素相等时取左边的元素
-            else {
+            } else {
                 arr[k] = aux[i++];
             }
         }
     }
-    public static boolean isSorted(Comparable[] arr) {
 
+    public static boolean isSorted(Comparable[] arr, int lo, int hi) {
+        for (int i = lo + 1; i <= hi; i++) {
+            if (less(arr[i], arr[i - 1])) return false;
+        }
+        return true;
+    }
+
+    public static boolean isSorted(Comparable[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (less(arr[i], arr[i - 1])) return false;
         }
         return true;
+    }
+
+    public static boolean less(Comparable a, Comparable b) {
+        return a.compareTo(b) < 0;
     }
 
     public static void main(String[] args) {
@@ -87,10 +81,10 @@ public class MyMerge {
         System.out.println("before test:");
         System.out.println(Arrays.toString(test));
         System.out.println("begin test:");
-        MyMerge.sort(test);
+        MyMerge2.sort(test);
         System.out.println("after test:");
         System.out.println(Arrays.toString(test));
-        System.out.println(MyMerge.isSorted(test));
+        System.out.println(MyMerge2.isSorted(test));
         System.out.println(stopwatch.elapsedTime());
     }
 }
