@@ -61,11 +61,11 @@ public class SortCompare {
 //        int trials = Integer.parseInt(args[3]);
 //        String alg1 = "MyShell";
         String alg1 = "MyMergeX";
-        String alg2 = "MyMerge";
+//        String alg2 = "MyMerge";
 //        String alg2 = "MyInsertion";
 //        String alg2 = "MySelection";
-//        String alg2 = "MyShell";
-        int n = 50000;
+        String alg2 = "MyShell";
+        int n = 10000;
         int trials = 1000;
         double time1, time2;
 //        if (args.length == 5 && args[4].equals("sorted")) {
