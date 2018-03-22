@@ -1,6 +1,8 @@
 package com.wtt.chapter2;
 
 /**
+ * insert和delMax方法都是lgN的数量级
+ *
  * 2018/3/22 16:39 add by wutaotao
  */
 public class MyMaxPQ<Key extends Comparable<Key>> {
