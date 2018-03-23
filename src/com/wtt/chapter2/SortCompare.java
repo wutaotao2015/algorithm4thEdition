@@ -19,10 +19,10 @@ public class SortCompare {
         else if (alg.equals("MyMerge"))           MyMerge.sort(a);
         else if (alg.equals("MyMergeX"))          MyMergeX.sort(a);
 //        else if (alg.equals("MergeBU"))         MergeBU.sort(a);
-//        else if (alg.equals("Quick"))           Quick.sort(a);
+        else if (alg.equals("MyQuick"))           MyQuick.sort(a);
 //        else if (alg.equals("Quick3way"))       Quick3way.sort(a);
 //        else if (alg.equals("QuickX"))          QuickX.sort(a);
-//        else if (alg.equals("Heap"))            Heap.sort(a);
+        else if (alg.equals("MyHeap"))            MyHeap.sort(a);
         else if (alg.equals("System"))          Arrays.sort(a);
         else throw new IllegalArgumentException("Invalid algorithm: " + alg);
         return sw.elapsedTime();
@@ -60,11 +60,13 @@ public class SortCompare {
 //        int n = Integer.parseInt(args[2]);
 //        int trials = Integer.parseInt(args[3]);
 //        String alg1 = "MyShell";
-        String alg1 = "MyMergeX";
+//        String alg1 = "MyMergeX";
+        String alg1 = "MyQuick";
+        String alg2 = "MyHeap";
 //        String alg2 = "MyMerge";
 //        String alg2 = "MyInsertion";
 //        String alg2 = "MySelection";
-        String alg2 = "MyShell";
+//        String alg2 = "MyShell";
         int n = 10000;
         int trials = 1000;
         double time1, time2;
