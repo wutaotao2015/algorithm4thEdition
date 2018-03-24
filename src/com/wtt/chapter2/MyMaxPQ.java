@@ -3,6 +3,10 @@ package com.wtt.chapter2;
 /**
  * insert和delMax方法都是lgN的数量级
  *
+ * 泛型参数<Key extends Comparable<Key>>可以使得delMax中的返回值类型Key与用例main方法中定义的泛型类型（如String,Integer)一致
+ * 若直接使用Comparable接口，delMax方法返回类型为Comparable接口类型，则main方法中还需要进行强制类型转换
+ * 也就是说，<Key extends Comparable<Key>>将对象类型限制到了具体的类这一级别，而不是接口的级别
+ *
  * 2018/3/22 16:39 add by wutaotao
  */
 public class MyMaxPQ<Key extends Comparable<Key>> {
