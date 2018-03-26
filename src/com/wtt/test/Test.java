@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.Accumulator;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdRandom;
 
+import java.util.Arrays;
+
 /**
  * Created by wutaotao
  * 2018/3/6 21:21

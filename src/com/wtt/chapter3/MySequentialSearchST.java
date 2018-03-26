@@ -3,6 +3,9 @@ package com.wtt.chapter3;
 import com.wtt.chapter1.practice.MyChainQueue;
 
 /**
+ * get n/2
+ * put n
+ *
  * 2018/3/26 15:51 add by wutaotao
  */
 public class MySequentialSearchST<Key, Value> {
