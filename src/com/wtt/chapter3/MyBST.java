@@ -1,6 +1,7 @@
 package com.wtt.chapter3;
 
 import com.wtt.chapter1.practice.Queue;
+import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -28,20 +29,31 @@ public class MyBST<Key extends Comparable<Key>, Val> {
     // 一个根节点就可以代表一棵二叉树，利用递归的结构
     private Node root;
 
-    public Val get(Key key) {
-        return get(root, key);
-    }
+//    public Val get(Key key) {
+//        return get(root, key);
+//    }
+//
+//    private Val get(Node x, Key key) {
+//        if (x == null) return null;
+//        int i = key.compareTo(x.key);
+//        if (i < 0) {
+//            return get(x.left, key);
+//        } else if (i > 0) {
+//            return get(x.right, key);
+//        } else {
+//            return x.val;
+//        }
+//    }
 
-    private Val get(Node x, Key key) {
-        if (x == null) return null;
-        int i = key.compareTo(x.key);
-        if (i < 0) {
-            return get(x.left, key);
-        } else if (i > 0) {
-            return get(x.right, key);
-        } else {
-            return x.val;
+    public Val get(Key key) {
+        Node x = root;
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            if (cmp == 0) return x.val;
+            else if (cmp < 0) x = x.left;
+            else x = x.right;
         }
+        return null;
     }
 
     public void put(Key key, Val val) {
@@ -64,6 +76,32 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         x.n = size(x.left) + size(x.right) + 1;
         return x;
     }
+    // 非递归的put方法
+//    public void put(Key key, Val val) {
+//
+//        Node z = new Node(key, val, 1);
+//        if (root == null) {
+//            root = z;
+//            return;
+//        }
+//        Node parent = null;
+//        Node x = root;
+//        while (x != null) {
+//            parent = x;
+//            int cmp = key.compareTo(x.key);
+//            if (cmp == 0) {
+//                x.val = val;
+//                return;
+//            }else if (cmp < 0) {
+//                x = x.left;
+//            }else{
+//                x = x.right;
+//            }
+//        }
+//        int cmp = key.compareTo(parent.key);
+//        if (cmp < 0) parent.left = z;
+//        else parent.right = z;
+//    }
 
     public int size() {
         return size(root);
@@ -181,9 +219,11 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         x.n = size(x.left) + size(x.right) + 1;
         return x;
     }
+
     public void delete(Key key) {
         root = delete(root, key);
     }
+
     // 在以x为根节点的子树中，删掉键为key的节点
     private Node delete(Node x, Key key) {
 
@@ -206,10 +246,29 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         x.n = size(x.left) + size(x.right) + 1;
         return x;
     }
+
+//    public Iterable<Key> keys() {
+//        if (isEmpty()) return new Queue<Key>();
+//        return keys(min(), max());
+//    }
+    // 中序遍历的另一种方法 非递归
     public Iterable<Key> keys() {
-        if (isEmpty()) return new Queue<Key>();
-        return keys(min(), max());
+        Stack<Node> stack = new Stack<Node>();
+        Queue<Key> queue = new Queue<Key>();
+        Node x = root;
+        while (x != null || !stack.isEmpty()) {
+            if (x != null) {
+                stack.push(x);
+                x = x.left;
+            } else {
+                x = stack.pop();
+                queue.enqueue(x.key);
+                x = x.right;
+            }
+        }
+        return queue;
     }
+
     public Iterable<Key> keys(Key lo, Key hi) {
 
         Queue<Key> queue = new Queue<>();
@@ -220,6 +279,7 @@ public class MyBST<Key extends Comparable<Key>, Val> {
     // 这个方法充分说明了树中的每个节点都是一个根节点的概念
     // 由中序遍历改造而来
     private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
+
         if (x == null) return;
         int cmplo = lo.compareTo(x.key);
         int cmphi = hi.compareTo(x.key);
@@ -227,24 +287,29 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
+
     public int size(Key lo, Key hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to size() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to size() is null");
 
         if (lo.compareTo(hi) > 0) return 0;
         if (contains(hi)) return rank(hi) - rank(lo) + 1;
-        else              return rank(hi) - rank(lo);
+        else return rank(hi) - rank(lo);
     }
+
     public boolean contains(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         return get(key) != null;
     }
+
     public boolean isEmpty() {
         return size() == 0;
     }
+
     public int height() {
         return height(root);
     }
+
     // 最底下的节点高度为0
     private int height(Node x) {
         if (x == null) return -1;
@@ -290,8 +355,8 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         StdOut.println();
 
         // test range search and range count
-        String[] from = { "A", "Z", "X", "0", "B", "C" };
-        String[] to   = { "Z", "A", "X", "Z", "G", "L" };
+        String[] from = {"A", "Z", "X", "0", "B", "C"};
+        String[] to = {"Z", "A", "X", "Z", "G", "L"};
         StdOut.println("range search");
         StdOut.println("-------------------");
         for (int i = 0; i < from.length; i++) {
