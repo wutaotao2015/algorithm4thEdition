@@ -1,7 +1,6 @@
 package com.wtt.chapter3;
 
 import com.wtt.chapter1.practice.Queue;
-import edu.princeton.cs.algs4.BST;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -183,9 +182,7 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         return x;
     }
     public void delete(Key key) {
-        Node x = delete(root, key);
-        if (x == null) throw new NullPointerException("the key not existed");
-        root = x;
+        root = delete(root, key);
     }
     // 在以x为根节点的子树中，删掉键为key的节点
     private Node delete(Node x, Key key) {
@@ -210,6 +207,7 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         return x;
     }
     public Iterable<Key> keys() {
+        if (isEmpty()) return new Queue<Key>();
         return keys(min(), max());
     }
     public Iterable<Key> keys(Key lo, Key hi) {
