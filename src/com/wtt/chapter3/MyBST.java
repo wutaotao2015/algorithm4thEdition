@@ -1,6 +1,8 @@
 package com.wtt.chapter3;
 
 import com.wtt.chapter1.practice.Queue;
+import edu.princeton.cs.algs4.BST;
+import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Binary search tree
@@ -150,7 +152,7 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         if (k < leftN) return select(x.left, k);
         // 进入右子树后，排名需要与节点数n进行比较，
         //所以排名需要减去leftN,减去根节点的1
-        return select(x.right, leftN - k - 1);
+        return select(x.right, k - leftN - 1);
     }
 
     public int rank(Key key) {
@@ -192,12 +194,12 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         // 包括寻找到指定需要删除的节点的过程和该节点不存在的情况
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
-        if (cmp < 0) x = delete(x.left, key);
-        else if (cmp > 0) x = delete(x.right, key);
+        if (cmp < 0) x.left = delete(x.left, key);
+        else if (cmp > 0) x.right = delete(x.right, key);
         else {
             // 单链路的节点删除很明显
-            if (x.left == null) x = x.right;
-            if (x.right == null) x = x.left;
+            if (x.left == null) return x.right;
+            if (x.right == null) return x.left;
             // 左右子树都存在的时候需要选择右子树的最小键作为根节点
             Node t = x;
             x = min(t.right);
@@ -216,6 +218,9 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         keys(root, queue, lo, hi);
         return queue;
     }
+
+    // 这个方法充分说明了树中的每个节点都是一个根节点的概念
+    // 由中序遍历改造而来
     private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
         if (x == null) return;
         int cmplo = lo.compareTo(x.key);
@@ -223,5 +228,109 @@ public class MyBST<Key extends Comparable<Key>, Val> {
         if (cmplo < 0) keys(x.left, queue, lo, hi);
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
+    }
+    public int size(Key lo, Key hi) {
+        if (lo == null) throw new IllegalArgumentException("first argument to size() is null");
+        if (hi == null) throw new IllegalArgumentException("second argument to size() is null");
+
+        if (lo.compareTo(hi) > 0) return 0;
+        if (contains(hi)) return rank(hi) - rank(lo) + 1;
+        else              return rank(hi) - rank(lo);
+    }
+    public boolean contains(Key key) {
+        if (key == null) throw new IllegalArgumentException("argument to contains() is null");
+        return get(key) != null;
+    }
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+    public int height() {
+        return height(root);
+    }
+    // 最底下的节点高度为0
+    private int height(Node x) {
+        if (x == null) return -1;
+        return Math.max(height(x.left), height(x.right)) + 1;
+    }
+
+    public static void main(String[] args) {
+        String test = "S E A R C H E X A M P L E";
+        String[] keys = test.split(" ");
+        int n = keys.length;
+        MyBST<String, Integer> st = new MyBST<>();
+//        BST<String, Integer> st = new BST<>();
+        for (int i = 0; i < n; i++)
+            st.put(keys[i], i);
+
+        StdOut.println("size = " + st.size());
+        StdOut.println("min  = " + st.min());
+        StdOut.println("max  = " + st.max());
+        StdOut.println();
+
+
+        // print keys in order using allKeys()
+        StdOut.println("Testing keys()");
+        StdOut.println("--------------------------------");
+        for (String s : st.keys())
+            StdOut.println(s + " " + st.get(s));
+        StdOut.println();
+
+        // print keys in order using select
+        StdOut.println("Testing select");
+        StdOut.println("--------------------------------");
+        for (int i = 0; i < st.size(); i++)
+            StdOut.println(i + " " + st.select(i));
+        StdOut.println();
+
+        // test rank, floor, ceiling
+        StdOut.println("key rank floor ceil");
+        StdOut.println("-------------------");
+        for (char i = 'A'; i <= 'Z'; i++) {
+            String s = i + "";
+            StdOut.printf("%2s %4d %4s %4s\n", s, st.rank(s), st.floor(s), st.ceiling(s));
+        }
+        StdOut.println();
+
+        // test range search and range count
+        String[] from = { "A", "Z", "X", "0", "B", "C" };
+        String[] to   = { "Z", "A", "X", "Z", "G", "L" };
+        StdOut.println("range search");
+        StdOut.println("-------------------");
+        for (int i = 0; i < from.length; i++) {
+            StdOut.printf("%s-%s (%2d) : ", from[i], to[i], st.size(from[i], to[i]));
+            for (String s : st.keys(from[i], to[i]))
+                StdOut.print(s + " ");
+            StdOut.println();
+        }
+        StdOut.println();
+
+        // delete the smallest keys
+        for (int i = 0; i < st.size() / 2; i++) {
+            st.deleteMin();
+        }
+        StdOut.println("After deleting the smallest " + st.size() / 2 + " keys");
+        StdOut.println("--------------------------------");
+        for (String s : st.keys())
+            StdOut.println(s + " " + st.get(s));
+        StdOut.println();
+
+        // delete all the remaining keys
+        while (!st.isEmpty()) {
+            st.delete(st.select(st.size() / 2));
+        }
+        StdOut.println("After deleting the remaining keys");
+        StdOut.println("--------------------------------");
+        for (String s : st.keys())
+            StdOut.println(s + " " + st.get(s));
+        StdOut.println();
+
+        StdOut.println("After adding back the keys");
+        StdOut.println("--------------------------------");
+        for (int i = 0; i < n; i++)
+            st.put(keys[i], i);
+        for (String s : st.keys())
+            StdOut.println(s + " " + st.get(s));
+        StdOut.println();
+
     }
 }
