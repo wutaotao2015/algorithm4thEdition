@@ -1,5 +1,7 @@
 package com.wtt.chapter3;
 
+import java.util.NoSuchElementException;
+
 /**
  * 红黑树创造性的利用链接的颜色将2-3树分解为二叉树，通过总结2-3树的4-节点的分解规律，得到了3条关于红链接的递归处理流程，
  * 并且通过左右旋转和颜色变化使得在整个树的变化过程中一直保持了树的平衡性和有序性，即树始终是黑色完美平衡的。
@@ -123,9 +125,148 @@ public class MyRedBlackBST<Key extends Comparable<Key>, Val> {
         return x;
     }
 
-    private void flipColors(Node x) {
-        x.color = RED;
-        x.left.color = BLACK;
-        x.right.color = BLACK;
+    // flip the colors of a node and its two children
+    private void flipColors(Node h) {
+        // h must have opposite color of its two children
+        // assert (h != null) && (h.left != null) && (h.right != null);
+        // assert (!isRed(h) &&  isRed(h.left) &&  isRed(h.right))
+        //    || (isRed(h)  && !isRed(h.left) && !isRed(h.right));
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+    }
+    public boolean isEmpty() {
+        return root == null;
+    }
+    public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("BST underflow");
+
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the minimum key rooted at h
+    private Node deleteMin(Node h) {
+        if (h.left == null)
+            return null;
+
+        // h 节点和它的左子节点都是2-节点时需要借节点
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+
+        h.left = deleteMin(h.left);
+        // 删除节点后向上返回的过程需要分解临时的4-节点
+        return balance(h);
+    }
+    // Assuming that h is red and both h.left and h.left.left
+    // are black, make h.left or one of its children red.
+    private Node moveRedLeft(Node h) {
+        // assert (h != null);
+        // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+
+        // 不存在红右连接，h 节点和它的左子节点都是2-节点时需要借节点
+        // 这里翻转颜色相当于将左子节点，父节点，右子节点合并为一个4-节点
+        flipColors(h);
+        // 不存在红右连接，只有h.right.left可能为红，此时与上述生成的临时4-节点冲突，变为5-节点，需要解决
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
+    }
+    // restore red-black tree invariant
+    private Node balance(Node h) {
+        // assert (h != null);
+
+        if (isRed(h.right))                      h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right))     flipColors(h);
+
+        h.n = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+    /**
+     * Removes the specified key and its associated value from this symbol table
+     * (if the key is in this symbol table).
+     *
+     * @param  key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(Key key) {
+        if (key == null) throw new IllegalArgumentException("argument to delete() is null");
+        if (!contains(key)) return;
+
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = delete(root, key);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the given key rooted at h
+    private Node delete(Node h, Key key) {
+        // assert get(h, key) != null;
+
+        if (key.compareTo(h.key) < 0)  {
+            // 在左子树中删除，若为3-节点直接删除，否则moveRedLeft借个键
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            // 删除
+            h.left = delete(h.left, key);
+        }
+        else {
+            if (isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                Node x = min(h.right);
+                h.key = x.key;
+                h.val = x.val;
+                // h.val = get(h.right, min(h.right).key);
+                // h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right, key);
+        }
+        return balance(h);
+    }
+    // the smallest key in subtree rooted at x; null if no such key
+    private Node min(Node x) {
+        // assert x != null;
+        if (x.left == null) return x;
+        else                return min(x.left);
+    }
+    // Assuming that h is red and both h.right and h.right.left
+    // are black, make h.right or one of its children red.
+    private Node moveRedRight(Node h) {
+        // assert (h != null);
+        // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+    /**
+     * Does this symbol table contain the given key?
+     * @param key the key
+     * @return {@code true} if this symbol table contains {@code key} and
+     *     {@code false} otherwise
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public boolean contains(Key key) {
+        return get(key) != null;
     }
 }
