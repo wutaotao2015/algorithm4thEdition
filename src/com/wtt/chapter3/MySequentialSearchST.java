@@ -92,6 +92,9 @@ public class MySequentialSearchST<Key, Value> {
         x.next = delete(x.next, key);
         return x;
     }
+    public boolean contains(Key key) {
+        return get(key) != null;
+    }
 
     public static void main(String[] args) {
         MySequentialSearchST<String, Integer> ssst = new MySequentialSearchST<>();
