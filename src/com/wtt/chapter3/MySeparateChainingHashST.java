@@ -5,6 +5,7 @@ import com.wtt.chapter1.practice.MyChainQueue;
 /**
  *
  * 由于散列函数将键均匀的分布到m个位置中，原来的键的顺序已经消失了
+ * 在键的顺序不重要的应用中，基于拉链法的散列表是最快的，也是最广泛的
  *
  * 2018/4/4 9:44 add by wutaotao
  */
@@ -45,8 +46,9 @@ public class MySeparateChainingHashST<Key, Val> {
         return (key.hashCode() & 0x7fffffff) % m;
     }
     public void put(Key key, Val val) {
-        // 如果键的总数大于3倍的m,意味着每条链条的平均长度超过了10,此时我们将数组长度扩展一倍
-        if (n >= 3 * m) resize(2 * m);
+        // 原文是10，这里为了main方法看效果，取3
+        // 如果键的总数大于2倍的m,意味着每条链条的平均长度超过了2,此时我们将数组长度扩展一倍
+        if (n >= 2 * m) resize(2 * m);
         int i = hash(key);
         if (!st[i].contains(key)) n++;
         st[i].put(key, val);
@@ -79,18 +81,18 @@ public class MySeparateChainingHashST<Key, Val> {
 
         // 这个例子可以看到重新hash引起键的位置重新排列的结果
         MySeparateChainingHashST<Integer, String> st = new MySeparateChainingHashST<>();
-        st.put(3, "3");
-        st.put(6, "6");
-        st.put(9, "9");
-        st.put(12, "12");
+        st.put(3, "$");
+        st.put(6, "$");
+        st.put(9, "$");
+        st.put(1, "$");
         for (Integer integer : st.keys()) {
             System.out.println(integer + " " +st.get(integer));
         }
         System.out.println("begin put others");
-        st.put(20, "20");
-        st.put(30, "30");
-        st.put(31, "30");
-        st.put(32, "30");
+        st.put(2, "#");
+        st.put(4, "#");
+        st.put(5, "#");
+        st.put(7, "#");
         for (Integer integer : st.keys()) {
             System.out.println(integer + " " +st.get(integer));
         }
