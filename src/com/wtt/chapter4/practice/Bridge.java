@@ -54,6 +54,8 @@ public class Bridge {
             if (pre[w] == -1) {
                 dfs(G, v, w);
                 low[v] = Math.min(low[v], low[w]);
+                // 这里说明1是和2,3,4环分离的
+                // u = v = 1, w = 2
                 if (low[w] == pre[w]) {
                     StdOut.println(v + "-" + w + " is a bridge");
                     bridges++;
@@ -62,6 +64,7 @@ public class Bridge {
 
             // update low number - ignore reverse of edge leading to v
             else if (w != u)
+                // 这里完成环2,3,4的low值统一工作
                 low[v] = Math.min(low[v], pre[w]);
         }
     }
@@ -70,9 +73,24 @@ public class Bridge {
     public static void main(String[] args) {
 //        int V = Integer.parseInt(args[0]);
 //        int E = Integer.parseInt(args[1]);
-        int V = 8;
-        int E = 4;
-        Graph G = GraphGenerator.simple(V, E);
+//        int V = 10;
+//        int E = 7;
+//        Graph G = GraphGenerator.simple(V, E);
+        //0: 6 9
+        //1: 2
+        //2: 3 4 1
+        //3: 2
+        //4: 2
+        //5: 8 6
+        //6: 0 5
+        //7:
+        //8: 5
+        //9: 0
+        Graph G = new Graph(5);
+        G.addEdge(2, 1);
+        G.addEdge(2, 4);
+        G.addEdge(2, 3);
+        G.addEdge(3, 4);
         StdOut.println(G);
 
         Bridge bridge = new Bridge(G);
