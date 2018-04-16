@@ -1,8 +1,9 @@
 package com.wtt.chapter4;
 
 import com.wtt.chapter1.practice.Queue;
+import edu.princeton.cs.algs4.Stack;
 
-import java.util.Stack;
+import java.util.Arrays;
 
 /**
  * 广度优先搜索
@@ -60,5 +61,45 @@ public class MyBreadthFirstPaths {
         }
         stack.push(s);
         return stack;
+    }
+    public String getEdges() {
+        return Arrays.toString(edges);
+    }
+
+    /**
+     * 应该维护一个disTo[]数组，见BreadthFirstPaths类
+     * @param v
+     * @return
+     */
+    public int distTo(int v) {
+
+        int count = 0;
+        for(int x = v; x != s; x = edges[x]) {
+            count++;
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+
+        MyGraph myGraph = new MyGraph(6);
+        myGraph.addEdge(0, 2);
+        myGraph.addEdge(1, 2);
+//        myGraph.addEdge(3, 2);
+        myGraph.addEdge(5, 4);
+        myGraph.addEdge(5, 3);
+        MyBreadthFirstPaths myBreadthFirstPaths = new MyBreadthFirstPaths(myGraph, 0);
+        System.out.println(myBreadthFirstPaths.getEdges());
+        for (int i = 0; i < myGraph.V(); i++) {
+            System.out.print("0 - " + i + ": ");
+            if (myBreadthFirstPaths.hasPathTo(i)) {
+                for (Integer x : myBreadthFirstPaths.pathTo(i)) {
+                    if (x == 0) System.out.print(x);
+                    else System.out.print("-" + x);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println(myBreadthFirstPaths.distTo(1));
+        System.out.println(myBreadthFirstPaths.distTo(2));
     }
 }
