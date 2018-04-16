@@ -2,6 +2,7 @@ package com.wtt.chapter4;
 
 import com.wtt.chapter1.practice.Bag;
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stack;
 
 /**无向图实现
  * 1. 邻接表  v^2的数组，边v-w则代表v,w处的值为true,若无该边则为false 所需空间太大
@@ -42,6 +43,23 @@ public class MyGraph {
             addEdge(a, b);
         }
     }
+
+    public MyGraph(MyGraph graph) {
+        // 调用顶点个数构造器完成v，e, adj变量的初始化工作，再赋值即可
+        this(graph.V());
+        this.E = graph.E();
+        for (int v = 0; v < graph.V(); v++) {
+            Stack<Integer> stack = new Stack<>();
+            for (Integer w : graph.adj(v)) {
+                stack.push(w);
+            }
+            // 背包是无序的
+            for (Integer w : stack) {
+                adj[v].add(w);
+            }
+        }
+    }
+
     public int V() {return V;}
     public int E() {return E;}
     public void addEdge(int a, int b) {
@@ -53,4 +71,5 @@ public class MyGraph {
     public Iterable<Integer> adj(int v) {
         return adj[v];
     }
+
 }
