@@ -2,7 +2,7 @@ package com.wtt.chapter4;
 
 /**
  *
- * 有向无环图的拓扑排序
+ * 有向无环图的拓扑排序, 为有优先级限制的调度问题提供了解决方案
  *  深度优先搜索的逆后序即拓扑排序
  *  该点可由深度优先的递归调用特性证明可知
  *
@@ -21,7 +21,7 @@ public class MyTopologicalOrder {
         MyDirectedCycle myDirectedCycle = new MyDirectedCycle(digraph);
         if (!myDirectedCycle.hasCycle()) {
             MyDepthFirstOrder myDepthFirstOrder = new MyDepthFirstOrder(digraph);
-            order = myDepthFirstOrder.reversePostOrder();
+            order = myDepthFirstOrder.reversePost();
         }
     }
     public boolean isDAG() {
