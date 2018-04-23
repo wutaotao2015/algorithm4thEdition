@@ -58,12 +58,12 @@ public class MyHeap {
     public static void main(String[] args) {
 
         Stopwatch stopwatch = new Stopwatch();
-//        Integer[] test = new Integer[]{8, 2, 0, 6, 9, 8, 7, 9, 5, 4};
-        int n = 10000;
-        Integer[] test = new Integer[n];
-        for (int i = 0; i < n; i++) {
-            test[i] = StdRandom.uniform(n);
-        }
+        Integer[] test = new Integer[]{8, 2, 0, 6, 9, 1, 7, 3, 5, 4};
+//        int n = 10000;
+//        Integer[] test = new Integer[n];
+//        for (int i = 0; i < n; i++) {
+//            test[i] = StdRandom.uniform(n);
+//        }
         System.out.println("before test:");
         System.out.println(Arrays.toString(test));
         System.out.println("begin test:");
