@@ -60,7 +60,56 @@ public class MyLazyPrimMST {
     }
 
     public double weight() {
+        double weightSum =  0;
+        for (MyEdge myEdge : mstQueue) {
+            weightSum += myEdge.weight();
+        }
+        return weightSum;
+    }
 
-        return 0;
+    public static void main(String[] args) {
+
+        MyEdgeWeightedGraph myEdgeWeightedGraph = new MyEdgeWeightedGraph(8);
+        MyEdge myEdge = new MyEdge(0, 7, 0.16);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(0, 2, 0.26);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(0, 4, 0.38);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(0, 6, 0.58);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(7, 1, 0.19);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(7, 5, 0.28);
+        myEdgeWeightedGraph.addEdge(myEdge);
+//        myEdge = new MyEdge(7, 2, 0.34);
+//        myEdgeWeightedGraph.addEdge(myEdge);
+//        myEdge = new MyEdge(7, 4, 0.37);
+//        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(1, 3, 0.29);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(1, 5, 0.32);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(1, 2, 0.36);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(2, 3, 0.17);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(2, 6, 0.40);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(3, 6, 0.52);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(4, 5, 0.35);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(4, 6, 0.93);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(7, 2, 0.34);
+        myEdgeWeightedGraph.addEdge(myEdge);
+        myEdge = new MyEdge(7, 4, 0.37);
+        myEdgeWeightedGraph.addEdge(myEdge);
+
+        MyLazyPrimMST myLazyPrimMST = new MyLazyPrimMST(myEdgeWeightedGraph);
+        for (MyEdge edge : myLazyPrimMST.edges()) {
+            System.out.println(edge);
+        }
     }
 }

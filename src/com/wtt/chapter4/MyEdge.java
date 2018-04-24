@@ -37,10 +37,6 @@ public class MyEdge implements Comparable<MyEdge> {
 
     @Override
     public String toString() {
-        return "MyEdge{" +
-                "v=" + v +
-                ", w=" + w +
-                ", weight=" + weight +
-                '}';
+        return String.format("%d-%d %.2f", v, w, weight);
     }
 }
