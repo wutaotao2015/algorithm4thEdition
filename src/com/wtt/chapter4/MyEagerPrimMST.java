@@ -34,7 +34,8 @@ public class MyEagerPrimMST {
         marked = new boolean[graph.V()];
         minPQ = new IndexMinPQ<>(graph.V());
 
-        distTo[0] = 0.0;
+        // edgeTo[0] = null;
+        distTo[0] = 0.0; // 权重有可能是负值
         minPQ.insert(0, 0.0); //顶点0的key为0.0，顶点x的key为x到树的最小权重
         while (!minPQ.isEmpty()) {
             visit(graph, minPQ.delMin());
