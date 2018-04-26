@@ -46,4 +46,14 @@ public class MyEdgeWeightedGraph {
         }
         return b;
     }
+    public Iterable<MyEdge> edges() {
+
+        Bag<MyEdge> resBag = new Bag<>();
+        for (int i = 0; i < v; i++) {
+            for (MyEdge myEdge : adj(i)) {
+                resBag.add(myEdge);
+            }
+        }
+        return resBag;
+    }
 }
