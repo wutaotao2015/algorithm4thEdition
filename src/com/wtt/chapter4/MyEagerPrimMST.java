@@ -22,7 +22,7 @@ public class MyEagerPrimMST {
     private MyEdge[] edgeTo;  // 索引对应顶点的最小权重边，也是MST的边，其值随树的增长而变化
     private double[] distTo;     // 索引对应顶点到MST的最小权重边的权重，其值随树的增长而变化，最后结果与mstEdgeTo一致
     private boolean[] marked;   // 顶点是否在树中
-    private IndexMinPQ<Double> minPQ;  // 索引对应顶点到树的最小权重的索引优先队列，里面的边没有无效边，当停止入队时，mst中所有边就确定了
+    private IndexMinPQ<Double> indexMinPQ;  // 索引对应顶点到树的最小权重的索引优先队列，里面的边没有无效边，当停止入队时，mst中所有边就确定了
 
     public MyEagerPrimMST(MyEdgeWeightedGraph graph) {
 
@@ -32,13 +32,13 @@ public class MyEagerPrimMST {
             distTo[i] = Double.POSITIVE_INFINITY;
         }
         marked = new boolean[graph.V()];
-        minPQ = new IndexMinPQ<>(graph.V());
+        indexMinPQ = new IndexMinPQ<>(graph.V());
 
         // edgeTo[0] = null;
         distTo[0] = 0.0; // 权重有可能是负值
-        minPQ.insert(0, 0.0); //顶点0的key为0.0，顶点x的key为x到树的最小权重
-        while (!minPQ.isEmpty()) {
-            visit(graph, minPQ.delMin());
+        indexMinPQ.insert(0, 0.0); //顶点0的key为0.0，顶点x的key为x到树的最小权重
+        while (!indexMinPQ.isEmpty()) {
+            visit(graph, indexMinPQ.delMin());
         }
     }
     private void visit(MyEdgeWeightedGraph graph, int v) {
@@ -53,8 +53,8 @@ public class MyEagerPrimMST {
                 edgeTo[w] = myEdge;
                 distTo[w] = myEdgeWeight;
                 // 判断优先队列中是否已经包含w的索引
-                if (minPQ.contains(w)) minPQ.changeKey(w, myEdgeWeight);
-                else minPQ.insert(w, myEdgeWeight);
+                if (indexMinPQ.contains(w)) indexMinPQ.changeKey(w, myEdgeWeight);
+                else indexMinPQ.insert(w, myEdgeWeight);
             }
         }
     }
