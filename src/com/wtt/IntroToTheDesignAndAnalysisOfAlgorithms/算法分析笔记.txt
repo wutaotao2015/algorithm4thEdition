@@ -475,9 +475,27 @@ chapter 8 动态规划
 			要求F[n,W]
 			具体求解可以画出动态规划表，通过回溯表的计算过程可以得出最优解的物品列表
 			时间和空间效率都是O(nW),求解具体过程为O(n)
-		2. 记忆化
+		2. 记忆化(Memory Function)
+			针对自顶向下的算法，只对必要的子问题进行求解，可以像自底向上一样构造一个表，
+			表中数据全部初始化为null, 取值时如果为null,计算后将值放入其中，若不为null,则取该值，
+			避免第二次计算。
 
-
+			递归记忆法自顶向下解决背包问题
+			MFKnapsack(i, j) {
+				//除了0行和0列初始化为0外，其他单元格初始化为-1
+				if (F[i, j] < 0) {
+					if(j < Weighs[i]) {
+						value = MFKnapsack(i-1, j);
+					}else{
+						value = max(MFKnapsack(i-1, j), Values[i]+MFKnapsack(i-1, j-Weighs[i]));
+					}
+					F[i,j] = value;
+				}
+				return F[i,j];
+			}
+			求解MFKnapsack(n, w)即可。
+			记忆功能时间效率和从底向上是一样的，空间效率在自底向上是最高的。
+	3. 最优二叉查找树
 
 
 
