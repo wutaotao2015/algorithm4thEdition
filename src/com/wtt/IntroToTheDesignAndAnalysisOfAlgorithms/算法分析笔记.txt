@@ -552,6 +552,28 @@ chapter 9 贪婪技术
 		查找和合并元素的混合操作
 		快速查找：quick find
 		快速合并：quick union
+	3. Dijkstra算法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
